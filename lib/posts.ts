@@ -23,13 +23,11 @@ export function getSortedPostsData() {
         const fileContents = fs.readFileSync(fullPath, 'utf8')
 
         // Use gray-matter to parse the post metadata section
-        const matterResult = matter(fileContents).data;
-
-        const matterData: post = { date: matterResult.date, title: matterResult.title }
+        const matterResult = matter(fileContents);
 
         return {
             id,
-            ...matterData
+            ...(matterResult.data as post)
         }
 
     })
@@ -75,6 +73,6 @@ export async function getPostData(id: string) {
     return {
         id,
         contentHtml,
-        ...matterResult.data
+        ...(matterResult.data as post)
     }
 }

@@ -1,22 +1,12 @@
-import Layout from '../../components/Layout';
+import Layout from '@components/Layout';
 import Head from 'next/head';
-import Date from '../../components/Date';
-import utilStyles from '../../styles/utils.module.css';
-import { getAllPostIds, getPostData } from '../../lib/posts';
+import Date from '@components/Date';
+import utilStyles from '@styles/utils.module.css';
+import { getAllPostIds, getPostData } from '@lib/posts';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const paramId = params?.id;
-
-  let id = '';
-
-  if (typeof paramId === 'object') {
-    id = paramId[0];
-  } else if (typeof paramId === 'string') {
-    id = paramId;
-  }
-
-  const postData = await getPostData(id);
+  const postData = await getPostData(params?.id as string);
 
   return {
     props: {
@@ -34,7 +24,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 interface postData {
-  id: string;
   date: string;
   title: string;
   contentHtml: string;
